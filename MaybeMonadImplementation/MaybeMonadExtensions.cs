@@ -78,15 +78,12 @@ namespace MaybeMonadImplementation
 
     public abstract class Maybe
     {
-        public static Maybe None
+        public static None None
         {
             get { return new None(); }
         }
 
-        public virtual T OrElse<T>(Func<T> alternative)
-        {
-            return alternative();
-        }
+        public abstract T OrElse<T>(Func<T> alternative);
     }
 
     public abstract class Maybe<T>
@@ -132,9 +129,9 @@ namespace MaybeMonadImplementation
             return None.GetHashCode();
         }
 
-        public T OrElse<T>(T alternative)
+        public override T OrElse<T>(Func<T> alternative)
         {
-            return alternative;
+            return alternative();
         }
     }
 

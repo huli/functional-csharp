@@ -176,11 +176,27 @@ namespace MaybeMonadTests
         }
 
         [Test]
-        public void With_SollteMaybeMonadeErzeugen()
+        public void With_SollteMaybeMonadeErzeugen_WithEmptyList()
         {
             var maybe = new List<Programmer>().With(d => d.Name);
 
             Assert.That(maybe, Is.TypeOf(typeof(Some<IEnumerable<string>>)));
+        }
+        [Test]
+        public void With_SollteMaybeMonadeErzeugen()
+        {
+            var programmers = new List<Programmer>()
+            {
+                new Programmer() { Name = "Schumann", Vorname = "Robert" },
+                new Programmer() { Name = "Bach" },
+                new Programmer() { Name = "Richter", Vorname = "Sviatoslav" },
+                new Programmer()
+            };
+            var result = programmers.With(p => p.Vorname);
+            Assert.That(result, Is.Not.EqualTo(Maybe.None));
+            Assert.That(result.Value.Count(), Is.EqualTo(2));
+            Assert.That(result.Value.Any(v => string.Equals(v, "Robert")));
+            Assert.That(result.Value.Any(v => string.Equals(v, "Sviatoslav")));
         }
 
         [Test]
