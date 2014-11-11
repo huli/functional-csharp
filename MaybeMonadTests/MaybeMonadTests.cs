@@ -8,17 +8,13 @@ using NUnit.Framework;
 
 namespace MaybeMonadTests
 {
-    public class Person
+    public class Programmer
     {
         public string Name { get;set; }
         public string Vorname { get;set; }
-        public Person Nachbar { get; set; }
+        public Programmer Nachbar { get; set; }
     }
 
-    /// <summary>
-    /// Offene Punkte:
-    /// - Semantik With_SollteEineLeereListeLiefern_WennEsNullElementGibt
-    /// </summary>
     [TestFixture]
     public class MaybeMonadTests
     {
@@ -54,7 +50,7 @@ namespace MaybeMonadTests
         public void Maybe_SollteBindImplementieren_MonadRule3_FallNothing()
         {
             var result = 4.ToMaybe().Bind(a =>
-                ((Person)null).ToMaybe().Bind(b =>
+                ((Programmer)null).ToMaybe().Bind(b =>
                     "Test".ToMaybe().Bind(c =>
                         (a + " " + b + " " + c).ToMaybe()
                         )));
@@ -88,42 +84,42 @@ namespace MaybeMonadTests
         [Test]
         public void Value_SollteKorrektenWertZurueckgebenWennEinerVorhanden()
         {
-            var person = new Person();
-            var result = person.ToMaybe();
+            var programmer = new Programmer();
+            var result = programmer.ToMaybe();
 
-            Assert.That(result.Value, Is.EqualTo(person));
+            Assert.That(result.Value, Is.EqualTo(programmer));
         }
 
         [Test]
         public void Value_SollteNullZurueckgebenWennKeinerVorhanden()
         {
-            var result = ((Person)null).ToMaybe();
+            var result = ((Programmer)null).ToMaybe();
 
             Assert.That(result.Value, Is.Null);
-            Assert.That(result, Is.EqualTo(Maybe<Person>.None));
+            Assert.That(result, Is.EqualTo(Maybe.None));
         }
 
         [Test]
         public void ToMaybe_SollteSomeAusNichtNullWertErzeugen()
         {
-            var result = new Person().ToMaybe();
+            var result = new Programmer().ToMaybe();
 
-            Assert.That(result, Is.TypeOf(typeof(Some<Person>)));
-            Assert.That(result, Is.Not.EqualTo(Maybe<Person>.None));
+            Assert.That(result, Is.TypeOf(typeof(Some<Programmer>)));
+            Assert.That(result, Is.Not.EqualTo(Maybe.None));
         }
 
         [Test]
         public void ToMaybe_SollteNoneAusNichtNullWertErzeugen()
         {
-            var result = ((Person)null).ToMaybe();
+            var result = ((Programmer)null).ToMaybe();
 
-            Assert.That(result, Is.TypeOf(typeof(None<Person>)));
+            Assert.That(result, Is.TypeOf(typeof(None<Programmer>)));
         }
 
         [Test]
         public void With_SollteVorhandenWertKorrektBinden()
         {
-            var dummy = new Person() { Name = "Petricek" };
+            var dummy = new Programmer() { Name = "Petricek" };
 
             Assert.That(dummy.With(p => p.Name).Value, Is.EqualTo(dummy.Name));
         }
@@ -132,7 +128,7 @@ namespace MaybeMonadTests
         [Test]
         public void With_SollteNoneBinden_WennAusgangsObjektNullIst()
         {
-            var dummy = (Person)null;
+            var dummy = (Programmer)null;
 
             Assert.That(dummy.With(p => p.Name).Value, Is.Null);
         }
@@ -140,7 +136,7 @@ namespace MaybeMonadTests
         [Test]
         public void With_SollteNoneBinden_WennPropertyNull()
         {
-            var dummy = new Person() { Name = null };
+            var dummy = new Programmer() { Name = null };
 
             Assert.That(dummy.With(p => p.Name).Value, Is.Null);
         }
@@ -154,15 +150,15 @@ namespace MaybeMonadTests
         [Test]
         public void None_SollteKorrekteValueTypeSemantikImplementieren_WennTypUnterschiedlich()
         {
-            Assert.That(new None<Person>(), Is.EqualTo(Maybe.None));
+            Assert.That(new None<Programmer>(), Is.EqualTo(Maybe.None));
         }
 
         [Test]
         public void None_SollteUnabhaengigVomTypImmerEqualsSein()
         {
-            var person = ((Person) null).ToMaybe();
+            var programmer = ((Programmer) null).ToMaybe();
 
-            Assert.That(person, Is.EqualTo(Maybe.None));
+            Assert.That(programmer, Is.EqualTo(Maybe.None));
         }
 
         [Test]
@@ -176,13 +172,13 @@ namespace MaybeMonadTests
         [Test]
         public void NoneGeneric_SollteNichtEqualsMitNullSein()
         {
-            Assert.That(new None<Person>(), Is.Not.Null);
+            Assert.That(new None<Programmer>(), Is.Not.Null);
         }
 
         [Test]
         public void With_SollteMaybeMonadeErzeugen()
         {
-            var maybe = new List<Person>().With(d => d.Name);
+            var maybe = new List<Programmer>().With(d => d.Name);
 
             Assert.That(maybe, Is.TypeOf(typeof(Some<IEnumerable<string>>)));
         }
@@ -190,7 +186,7 @@ namespace MaybeMonadTests
         [Test]
         public void With_SollteEineLeereListeLiefern_WennEsEineLeereListeIst()
         {
-            var maybe = new List<Person>().With(d => d.Nachbar).With(p => p.Name).Value;
+            var maybe = new List<Programmer>().With(d => d.Nachbar).With(p => p.Name).Value;
 
             Assert.That(maybe, Is.Empty);
         }
@@ -198,16 +194,16 @@ namespace MaybeMonadTests
         [Test]
         public void With_SollteEineLeereListeLiefern_WennEsNullElementGibt()
         {
-            var maybe = new List<Person>() { new Person(), new Person() }.With(d => d.Nachbar).With(p => p.Name);
+            var maybe = new List<Programmer>() { new Programmer(), new Programmer() }.With(d => d.Nachbar).With(p => p.Name);
 
             Assert.That(maybe.Value, Is.Empty);
-            Assert.That(maybe.Value, Is.EqualTo(new List<Person>()));
+            Assert.That(maybe.Value, Is.EqualTo(new List<Programmer>()));
         }
 
         [Test]
         public void With_SollteNullElementeKorrektHerausfiltern()
         {
-            var maybe = new List<Person>() { null, null }.With(d => d.Nachbar).With(p => p.Name);
+            var maybe = new List<Programmer>() { null, null }.With(d => d.Nachbar).With(p => p.Name);
 
             Assert.That(maybe.Value, Is.Empty);
             Assert.That(maybe.Value, Is.EqualTo(new List<string>()));
@@ -216,35 +212,95 @@ namespace MaybeMonadTests
         [Test]
         public void With_SollteLeereListeLiefern_WennAlleElementeNull()
         {
-            var maybe = new List<Person>() { new Person(), null }.With(d => d.Nachbar).With(p => p.Name);
+            var maybe = new List<Programmer>() { new Programmer(), null }.With(d => d.Nachbar).With(p => p.Name);
 
-            Assert.That(maybe.Value, Is.EqualTo(new List<Person>()));
+            Assert.That(maybe.Value, Is.EqualTo(new List<Programmer>()));
         }
 
         [Test]
         public void Equals_SollteTrueSein_WennGleicheReferenz()
         {
-            var person = new Person();
+            var programmer = new Programmer();
 
-            Assert.That(person.ToMaybe(), Is.EqualTo(person.ToMaybe()));
+            Assert.That(programmer.ToMaybe(), Is.EqualTo(programmer.ToMaybe()));
         }
 
         [Test]
         public void Equals_SollteFalseSein_WennNichtGleicheReferenz()
         {
-            Assert.That(new Person().ToMaybe(), Is.Not.EqualTo(new Person().ToMaybe()));
+            Assert.That(new Programmer().ToMaybe(), Is.Not.EqualTo(new Programmer().ToMaybe()));
         }
 
         [Test]
         public void ToString_SollteNoneLiefern()
         {
-            Assert.That(((Person)null).ToMaybe().ToString(), Is.EqualTo("None"));
+            Assert.That(((Programmer)null).ToMaybe().ToString(), Is.EqualTo("None"));
         }
 
         [Test]
         public void ToString_SollteToStringVonObjektLiefern()
         {
-            Assert.That(new Person().ToMaybe().ToString(), Is.EqualTo(new Person().ToString()));
+            Assert.That(new Programmer().ToMaybe().ToString(), Is.EqualTo(new Programmer().ToString()));
+        }
+
+        [Test]
+        public void OrElse_SollteAlternativenWertLiefern_WennNone()
+        {
+            var option = Maybe.None;
+
+            var programmer = new Programmer();
+            var result = option.OrElse(() => programmer);
+
+            Assert.That(result, Is.EqualTo(programmer));
+        }
+
+
+        [Test]
+        public void OrElse_SollteAlternativenMaybeLiefern_WennNone()
+        {
+            var option = Maybe.None;
+
+            var programmer = new Programmer();
+            var result = option.OrElse(() => new Some<Programmer>(programmer));
+
+            Assert.That(result.Value, Is.EqualTo(programmer));
+        }
+
+        [Test]
+        public void OrElse_SollteAlternativenWertLifern_WennNoneAndGeneric()
+        {
+            var option = ((Programmer)null).ToMaybe();
+
+            var programmer = new Programmer();
+            var result = option.OrElse(() => programmer);
+
+            Assert.That(result, Is.EqualTo(programmer));  
+        }
+
+
+        [Test]
+        public void OrElse_SollteWertLiefern_WennSome()
+        {
+            var programmer = new Programmer();
+            var option = programmer.ToMaybe();
+
+            var anotherprogrammer = new Programmer();
+            var result = option.OrElse(() => anotherprogrammer);
+
+            Assert.That(result, Is.EqualTo(programmer));
+        }
+
+
+        [Test]
+        public void OrElse_SollteMaybeLiefern_WennSome()
+        {
+            var programmer = new Programmer();
+            var option = programmer.ToMaybe();
+
+            var anotherprogrammer = new Programmer();
+            var result = option.OrElse(() => new Some<Programmer>(anotherprogrammer));
+
+            Assert.That(result.Value, Is.EqualTo(programmer));
         }
     }
 }

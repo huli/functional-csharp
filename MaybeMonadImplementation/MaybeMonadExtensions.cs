@@ -76,15 +76,20 @@ namespace MaybeMonadImplementation
         }
     }
 
-    public class Maybe
+    public abstract class Maybe
     {
         public static Maybe None
         {
             get { return new None(); }
         }
+
+        public virtual T OrElse<T>(Func<T> alternative)
+        {
+            return alternative();
+        }
     }
 
-    public class Maybe<T> : Maybe
+    public abstract class Maybe<T>
     {
         public static Maybe<T> Some
         {
@@ -92,6 +97,9 @@ namespace MaybeMonadImplementation
         }
 
         public T Value { get; protected set; }
+
+        public abstract T OrElse(Func<T> alternative);
+        public abstract Maybe<T> OrElse(Func<Maybe<T>> alternative);
     }
 
     public interface INone
@@ -122,6 +130,11 @@ namespace MaybeMonadImplementation
         public override int GetHashCode()
         {
             return None.GetHashCode();
+        }
+
+        public T OrElse<T>(T alternative)
+        {
+            return alternative;
         }
     }
 
@@ -162,7 +175,17 @@ namespace MaybeMonadImplementation
 
         public override int GetHashCode()
         {
-            return None.GetHashCode();
+            return Maybe.None.GetHashCode();
+        }
+
+        public override T OrElse(Func<T> alternative)
+        {
+            return alternative();
+        }
+
+        public override Maybe<T> OrElse(Func<Maybe<T>> alternative)
+        {
+            return alternative();
         }
     }
 
@@ -196,6 +219,16 @@ namespace MaybeMonadImplementation
         public Some(T value)
         {
             Value = value;
+        }
+
+        public override T OrElse(Func<T> alternative)
+        {
+            return Value;
+        }
+
+        public override Maybe<T> OrElse(Func<Maybe<T>> alternative)
+        {
+            return this;
         }
     }
 }
