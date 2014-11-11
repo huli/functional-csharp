@@ -44,8 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="INone.cs" />
+    <Compile Include="Maybe.cs" />
     <Compile Include="MaybeMonadExtensions.cs" />
+    <Compile Include="None.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Some.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
