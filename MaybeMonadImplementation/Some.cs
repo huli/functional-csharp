@@ -1,4 +1,5 @@
 ﻿using System;
+using Garaio.Framework;
 
 namespace MaybeMonadImplementation
 {
@@ -33,15 +34,18 @@ namespace MaybeMonadImplementation
         {
             Value = value;
         }
-
         public override T OrElse(Func<T> alternative)
         {
             return Value;
         }
-
         public override Maybe<T> OrElse(Func<Maybe<T>> alternative)
         {
             return this;
+        }
+
+        public override bool IsSome
+        {
+            get { return true; }
         }
     }
 }

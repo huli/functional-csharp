@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Garaio.Framework;
 using MaybeMonadImplementation;
 using NUnit.Framework;
 
@@ -317,6 +318,43 @@ namespace MaybeMonadTests
             var result = option.OrElse(() => new Some<Programmer>(anotherprogrammer));
 
             Assert.That(result.Value, Is.EqualTo(programmer));
+        }
+
+        [Test]
+        public void IsSome_SollteTrueLiefern_WennSome()
+        {
+            Assert.That(new Some<bool>(true).IsSome, Is.True);
+        }
+
+        [Test]
+        public void IsSome_SollteFalseLiefern_WennNone()
+        {
+            Assert.That(new None<bool>().IsSome, Is.False);
+            Assert.That(((object)null).ToMaybe().IsSome, Is.False);
+        }
+
+        [Test]
+        public void ToMaybe_SollteNoneVonNullableMitNullErzeugen()
+        {
+            var dateTimeNullable = (DateTime?)null;
+
+            var maybe = dateTimeNullable.ToMaybe();
+            Assert.That(maybe, Is.TypeOf<None<DateTime>>());
+            Assert.That(maybe.IsSome, Is.False);
+            Assert.That(maybe.Value, Is.EqualTo(DateTime.MinValue));
+        }
+
+
+        [Test]
+        public void ToMaybe_SollteSomeVonNullableMitValueErzeugen()
+        {
+            var dateTime = DateTime.Now;
+            var dateTimeNullable = new DateTime?(dateTime);
+
+            var maybe = dateTimeNullable.ToMaybe();
+            Assert.That(maybe, Is.TypeOf<Some<DateTime>>());
+            Assert.That(maybe.IsSome, Is.True);
+            Assert.That(maybe.Value, Is.EqualTo(dateTime));
         }
     }
 }

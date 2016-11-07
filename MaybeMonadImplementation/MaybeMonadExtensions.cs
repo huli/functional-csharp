@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Garaio.Framework;
 
 namespace MaybeMonadImplementation
 {
@@ -73,6 +74,14 @@ namespace MaybeMonadImplementation
         private static bool CompareWithNull<T>(T element)
         {
             return element == null;
+        }
+
+        public static Maybe<DateTime> ToMaybe(this DateTime? nullableDatetime)
+        {
+            if (nullableDatetime.HasValue)
+                return new Some<DateTime>(nullableDatetime.Value);
+
+            return new None<DateTime>();
         }
     }
 }

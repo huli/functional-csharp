@@ -1,4 +1,5 @@
 ﻿using System;
+using Garaio.Framework;
 
 namespace MaybeMonadImplementation
 {
@@ -40,16 +41,16 @@ namespace MaybeMonadImplementation
         {
             return Maybe.None.GetHashCode();
         }
-
         public override T OrElse(Func<T> alternative)
         {
             return alternative();
         }
-
         public override Maybe<T> OrElse(Func<Maybe<T>> alternative)
         {
             return alternative();
         }
+
+        public override bool IsSome { get { return false; } }
     }
 
     public class None : Maybe, INone
