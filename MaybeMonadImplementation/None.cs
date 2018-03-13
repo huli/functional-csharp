@@ -32,7 +32,9 @@ namespace MaybeMonadImplementation
             if (ReferenceEquals(this, obj)) return true;
 
             var type = obj.GetType();
-            if (type == typeof(None<>) || type == typeof(None)) return true;
+            if (type == typeof(None<>) 
+                || type == typeof(None)
+                || type == typeof(None<T>)) return true;
 
             return false;
         }

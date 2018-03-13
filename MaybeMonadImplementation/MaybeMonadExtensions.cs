@@ -24,6 +24,9 @@ namespace MaybeMonadImplementation
             if (CompareWithNull(obj))
                 return new None<TReturn>();
 
+            if(obj.Equals(Maybe.None))
+                return Maybe<TReturn>.None;
+            
             var result = func(obj);
             if (CompareWithNull(result))
                 return new None<TReturn>();

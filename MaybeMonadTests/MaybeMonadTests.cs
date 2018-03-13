@@ -162,6 +162,15 @@ namespace MaybeMonadTests
             Assert.That(programmer, Is.EqualTo(Maybe.None));
         }
 
+
+        [Test]
+        public void None_SollteUnabhaengigVomTypImmerEqualsSein_AuchWennTypisiert()
+        {
+            var programmer = (Programmer)null;
+
+            Assert.That(programmer.ToMaybe(), Is.EqualTo(Maybe<Programmer>.None));
+        }
+
         [Test]
         public void None_SollteNichtEqualsMitNullSein()
         {
@@ -232,6 +241,25 @@ namespace MaybeMonadTests
             var maybe = new List<Programmer>() { new Programmer(), null }.With(d => d.Nachbar).With(p => p.Name);
 
             Assert.That(maybe.Value, Is.EqualTo(new List<Programmer>()));
+        }
+
+        [Test]
+        public void With_SollteProjektionKorrektMachen_WennSome()
+        {
+            var maybe = new Programmer()
+            {
+                Name = "Huber"
+            }.ToMaybe().With(p => p.Value.Name);
+
+            Assert.That(maybe.Value, Is.EqualTo("Huber"));
+        }
+
+        [Test]
+        public void With_SollteKeineProjektionMachen_WennNone()
+        {
+            var maybe = ((Programmer)null).ToMaybe().With(p => p.Value.Name);
+
+            Assert.That(maybe, Is.EqualTo(Maybe.None));
         }
 
         [Test]
