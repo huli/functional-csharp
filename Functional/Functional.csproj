@@ -45,8 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Continuation.cs" />
     <Compile Include="FunctionalExtensions.cs" />
     <Compile Include="INone.cs" />
+    <Compile Include="Lambda.cs" />
     <Compile Include="Maybe.cs" />
     <Compile Include="MaybeMonadExtensions.cs" />
     <Compile Include="None.cs" />

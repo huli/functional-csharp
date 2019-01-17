@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FunctionalExtensionsFixture.cs" />
+    <Compile Include="ContinuationFixture.cs" />
+    <Compile Include="LambdaFixture.cs" />
     <Compile Include="MaybeMonadExtensionsFixture.cs" />
     <Compile Include="Programmer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

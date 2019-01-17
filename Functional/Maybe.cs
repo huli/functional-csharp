@@ -1,7 +1,7 @@
 using System;
 using Functional;
 
-namespace Garaio.Framework
+namespace Functional
 {
     public abstract class Maybe<T>
     {
