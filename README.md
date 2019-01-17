@@ -2,6 +2,9 @@
 
 Don't like to write the cumbersome declarations to satisfy the compiler over and over again. Therefore I hereby save my typings for future reference.
 
+#### Todo's
+* translate tests
+
 #### Included is:
 * a (trivial) latch to make sure code is only called once
 * declarations for partial function application of functions
