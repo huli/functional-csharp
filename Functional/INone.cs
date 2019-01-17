@@ -1,4 +1,4 @@
-﻿namespace MaybeMonadImplementation
+﻿namespace Functional
 {
     public interface INone
     { }

@@ -1,5 +1,5 @@
 using System;
-using MaybeMonadImplementation;
+using Functional;
 
 namespace Garaio.Framework
 {
@@ -19,6 +19,8 @@ namespace Garaio.Framework
         public abstract T OrElse(Func<T> alternative);
         public abstract Maybe<T> OrElse(Func<Maybe<T>> alternative);
         public abstract bool IsSome { get; }
+
+        public abstract bool IsNone { get; }
     }
 
     public abstract class Maybe

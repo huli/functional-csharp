@@ -1,7 +1,7 @@
 ﻿using System;
 using Garaio.Framework;
 
-namespace MaybeMonadImplementation
+namespace Functional
 {
     public class Some<T> : Maybe<T>
     {
@@ -43,9 +43,7 @@ namespace MaybeMonadImplementation
             return this;
         }
 
-        public override bool IsSome
-        {
-            get { return true; }
-        }
+        public override bool IsSome => true;
+        public override bool IsNone => !IsSome;
     }
 }

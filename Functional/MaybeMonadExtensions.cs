@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Garaio.Framework;
 
-namespace MaybeMonadImplementation
+namespace Functional
 {
     public static class MonadExtensions
     {

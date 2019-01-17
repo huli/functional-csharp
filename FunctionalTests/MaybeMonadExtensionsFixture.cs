@@ -3,21 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Functional;
 using Garaio.Framework;
-using MaybeMonadImplementation;
 using NUnit.Framework;
 
-namespace MaybeMonadTests
+namespace FunctionalTests
 {
-    public class Programmer
-    {
-        public string Name { get;set; }
-        public string Vorname { get;set; }
-        public Programmer Nachbar { get; set; }
-    }
-
     [TestFixture]
-    public class MaybeMonadTests
+    public class MaybeMonadExtensionsFixture
     {
         [Test]
         public void Maybe_SollteTypeInitializerZurVerfuegungStellen_MonadRule1()
