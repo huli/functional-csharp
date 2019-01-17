@@ -6,12 +6,11 @@ Don't like to write the cumbersome declarations to satisfy the compiler over and
 * translate tests
 
 #### Included is:
-* a (trivial) latch to make sure code is only called once
 * declarations for partial function application of functions
 * declarations for currying
 * an experimental implementation of the maybe monad
+* some continuation stuff
 
 #### Not included is:
-* a concurrent latch
 * declarations for functions with more than n arguments
 * some other things I missed
