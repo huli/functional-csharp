@@ -13,4 +13,4 @@ Don't like to write the cumbersome declarations to satisfy the compiler over and
 
 #### Not included is:
 * declarations for functions with more than n arguments
-* some other things I missed
+* all the other stuff
